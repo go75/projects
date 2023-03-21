@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chat</title>
+  <style>
+
+    body {
+        height: 100%;
+        background-image: linear-gradient(to right, skyblue, violet);
+        text-align: center;
+    }
+
+    h1 {
+      color: grey;
+      margin-top: 5%;
+      margin-bottom: 10%;
+    }
+
+    input {
+      border: 0;
+      width: 50%;
+      height: 10%;
+      font-size: 20px;
+      font-weight: bold;
+      color: grey;
+      background: transparent;
+      border-bottom: 2px solid white;
+      padding: 5px 10px;
+      outline: none;
+      margin-bottom: 5%;
+    }
+
+    button {
+      margin-bottom: 5%;
+      width: 25%;
+      height: 50px;
+      border-radius: 10px;
+      border: 0;
+      color: #fff;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+    }
+
+    a {
+      color: white;
+      cursor: pointer;
+      padding-bottom: 0%;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>登录</h1>
+  <form id="user-info">
+    <input type="text" name="name" placeholder="用户名">
+    <input type="password" name="pwd" placeholder="密码">
+    <br>
+    <button id="btn" type="submit">登录</button>
+  </form>
+  <a >没有账户?点击注册</a>
+</body>
+<script>
+    let btn = document.getElementById('btn')
+    let a = document.getElementsByTagName('a').item(0)
+    let title = document.getElementsByTagName('h1').item(0)
+    let info = document.getElementById('user-info')
+    let check = document.createElement('input')
+    let br = document.createElement('br')
+    check.id = 'check'
+    check.type = 'password'
+    check.name = 'check'
+    check.placeholder = '确认密码'
+    a.onclick = function() {
+        if (title.innerText == '登录') {
+            info.removeChild(btn)
+            title.innerText = '注册'
+            btn.innerText = '注册'
+            a.innerText = '已有帐号?点击登录'
+            info.appendChild(check)
+            info.appendChild(br)
+            info.appendChild(btn)
+        } else {
+            info.removeChild(br)
+            info.removeChild(check)
+            title.innerText = '登录'
+            btn.innerText = '登录'
+            a.innerText = '没有帐号?点击注册'
+        }
+    }
+</script>
+</html>

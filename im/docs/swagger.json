@@ -1,0 +1,412 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API文档",
+        "title": "im系统接口文档",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/friend/add": {
+            "post": {
+                "tags": [
+                    "好友模块"
+                ],
+                "summary": "添加好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "对方id",
+                        "name": "id",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "请求消息内容",
+                        "name": "content",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/add/agree": {
+            "post": {
+                "tags": [
+                    "好友模块"
+                ],
+                "summary": "同意新好友的请求",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "对方id",
+                        "name": "id",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/add/refuse": {
+            "post": {
+                "tags": [
+                    "好友模块"
+                ],
+                "summary": "同意新好友的请求",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "对方id",
+                        "name": "id",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/delete": {
+            "post": {
+                "tags": [
+                    "好友模块"
+                ],
+                "summary": "删除好友",
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/list": {
+            "get": {
+                "tags": [
+                    "好友模块"
+                ],
+                "summary": "获取所有好友",
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/friend/new": {
+            "get": {
+                "tags": [
+                    "好友模块"
+                ],
+                "summary": "新好友信息",
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/list": {
+            "get": {
+                "tags": [
+                    "群聊模块"
+                ],
+                "summary": "群聊列表",
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/new": {
+            "get": {
+                "tags": [
+                    "群聊模块"
+                ],
+                "summary": "新群友信息",
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/regist": {
+            "post": {
+                "tags": [
+                    "群聊模块"
+                ],
+                "summary": "创建群聊",
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/session": {
+            "get": {
+                "tags": [
+                    "群聊模块"
+                ],
+                "summary": "群聊会话",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "群聊id",
+                        "name": "groupid",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/delete": {
+            "delete": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户注销",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "pwd",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "检查密码",
+                        "name": "check",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/list": {
+            "get": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户列表",
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "pwd",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/query": {
+            "get": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "根据用户名获取用户信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/regist": {
+            "post": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户注册",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "pwd",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "检查密码",
+                        "name": "check",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "file",
+                        "description": "选择头像",
+                        "name": "head",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/session": {
+            "get": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户会话",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "会话id",
+                        "name": "id",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "对方名称",
+                        "name": "name",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/update": {
+            "post": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户信息更新",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "性别",
+                        "name": "sex",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "个人介绍",
+                        "name": "introduce",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\", \"msg\", \"data\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

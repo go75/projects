@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <body>
+        <audio id="my-audio" src="" autoplay controls>播放麦克风捕获的声音</audio>
+        <button id="show-audio">打开麦克风</button>
+        <p>获取音频</p>
+    </body>
+    <script>
+        const constraints = {
+            audio:true,
+            video:false,
+        }
+
+        function openSucc(stream) {
+            const audio = document.getElementById('my-audio')
+            audio.srcObject = stream
+        }
+
+        function openErr(err) {
+            console.error("get user media err: " + err)
+        }
+
+        function openMicrophone() {
+            navigator.mediaDevices.getUserMedia(constraints).then(openSucc).catch(openErr)
+        }
+        document.getElementById('show-audio').addEventListener('click', openMicrophone)
+    </script>
+</html>

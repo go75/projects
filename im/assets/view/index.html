@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="Shortcut Icon" href="/static/img/favicon.ico" />
+    <title>信达</title>
+    <style type="text/css">
+        /* nav */
+        li {
+            list-style-type: none;
+        }
+
+        body {
+            margin: 0;
+            background-color: lightblue;
+        }
+
+        ul {
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            width: 72px;
+            background-color: skyblue;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        li p {
+            display: block;
+            padding: 50px 8px;
+            text-decoration: none;
+        }
+
+        li p:hover {
+            background-color: lightblue;
+        }
+
+        img {
+            margin-top: 32%;
+            margin-bottom: 32%;
+            width: 60px;
+            border-radius: 50%;
+        }
+
+        /* content */
+        #content {
+            padding:1px 120px;
+        }
+
+        input {
+            border: 0;
+            width: 50%;
+            height: 10%;
+            font-size: 20px;
+            font-weight: bold;
+            color: grey;
+            background: transparent;
+            border-bottom: 2px solid white;
+            padding: 5px 10px;
+            outline: none;
+            margin-bottom: 5%;
+        }
+
+        button {
+            margin-bottom: 5%;
+            width: 25%;
+            height: 50px;
+            border-radius: 10px;
+            border: 0;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: lightblue;
+        }
+    </style>
+    <script type="text/javascript">
+        
+        const xhr = new XMLHttpRequest()
+        var content = document.getElementById('')
+        var ws
+
+        function websocket() {
+            ws = new WebSocket("ws://127.0.0.1:9999/upgrade")
+            ws.onopen = function (evt) {
+                alert('连接建立')
+            }
+            ws.onclose = function (evt) {
+                alert('连接断开')
+                ws = null;
+            }
+            ws.onmessage = function (evt) {
+                evt.data
+                console.log(evt)
+                console.log(evt.data)
+            }
+            ws.onerror = function (evt) {
+                alert("ERROR: " + evt.data);
+            }
+        }
+
+        function doReq(method, url, ok, err) {
+            xhr.open(method, url, false)
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+            xhr.send(null)
+            if (xhr.status == 200) {
+                ok(xhr.responseText)
+            } else {
+                err(xhr.responseText)
+            }
+        }
+
+        function friendFunc() {
+            clearContent()
+            doReq('get', 'http://127.0.0.1:9999/friend/list', queryFriendsOk, queryFriendsErr)
+        }
+
+        function groupFunc() {
+            clearContent()
+            doReq('get', 'http://127.0.0.1:9999/group', function(text) {
+                console.log(text)
+            }, function(text) {
+
+            })
+        }
+
+        function addFunc() {
+            clearContent()
+            let user = document.createElement('option')
+            user.value = 'user'
+            user.innerText = '查找用户'
+            let group = document.createElement('option')
+            group.value = 'group'
+            group.innerHTML = '查找群聊'
+            let type = document.createElement('select')
+            type.appendChild(user)
+            type.appendChild(group)
+            content.appendChild(type)
+
+            let input = document.createElement('input')
+            content.appendChild(input)
+
+            let queryBtn = document.createElement('button')
+            queryBtn.innerText = '搜素'
+            queryBtn.onclick = function() {
+                doReq('get', 'http://127.0.0.1:9999/'+type.options[type.selectedIndex].value+'/query/'+input.value, queryOk, queryErr)
+            }
+            content.appendChild(queryBtn)
+        }
+
+        function queryFriendsOk(text) {
+            // // 私聊会话id
+            // ID uint `gorm:"primary_key"`
+            // // 两个用户中id较小值的名称
+            // SmallName string `gorm:"not null"`
+            // // 两个用户中id较大值的名称
+            // BigName string `gorm:"not null"`
+            // // 小id用户未读消息的数量
+            // SmallIdUnreadNum uint8
+            // // 大id用户未读消息的数量
+            // BigIdUnreadNum uint8
+            let list = JSON.parse(text)
+            console.log(list)
+            for (let i = 0;i < list.length; i++) {
+                let sessionId = list[i].ID
+                let name = ''
+                let p = document.createElement('p')
+                if (obj.SmallName == '') {
+                    p.innerText = '未读:' + list[i].BigIdUnreadNum
+                    name = list[i].BigName
+                    p.innerText += ' ' + name
+                } else {
+                    p.innerText = '未读:' + list[i].SmallIdUnreadNum
+                    name = list[i].BigName
+                    p.innerText += ' ' + name
+                }
+
+                // 获取用户session
+                p.onclick = function() {
+                    // ID uint `gorm:"primary_key"`
+                    // // 会话id, 如果是私聊就是私聊会话的id, 若是群聊就是群聊会话的id, 如果是添加操作就是对方的id
+                    // SessionId uint
+                    // // 发送方名称
+                    // SenderName string
+                    // // 消息类型 文字为0, 图片为1, 音频为2
+                    // Type uint8
+                    // // 消息内容
+                    // Content string
+                    doReq('get', 'http://127.0.0.1:9999/user/friend/session/' + sessionId + '/' + name, function(text) {
+                        let msgList = JSON.parse(text)
+                        console.log(msgList)
+                        clearContent()
+                        let h2 = document.createElement('h2')
+                        h2.innerText = name
+                        content.appendChild(h2)                            
+                        for (let i = 0;i < msgList.length; i++) {
+                            switch (msgList[i].Type) {
+                                case 0: {
+                                    // 文字消息
+                                    let p = document.createElement('p')
+                                    p.innerText = msgList.Content
+                                    break
+                                }
+                                case 1: {
+                                    // 图片信息
+                                    let p = document.createElement()
+                                    break
+                                }
+                                case 2: {
+                                    // 音频信息
+                                    break
+                                }
+                            }
+                        }
+                        let input = document.createElement('input')
+                        document.appendChild(input)
+                        let btn = document.createElement('button')
+                        btn.onclick = function() {
+                            // // 消息id, 0是用户消息, 1是群聊消息, 2是新好友消息, 3是新群友名称
+                            // ID uint8
+                            // // 发送方名称
+                            // SenderName string
+                            // // 接收方名称
+                            // ReceiverName string
+                            // // 消息类型
+                            // Type uint8
+                            // // 消息内容
+                            // Content string
+                            ws.send(input.value)
+                        }
+                        document.appendChild(btn)
+                    }, function(text) {
+
+                    })
+                }
+                content.appendChild(p)
+            }
+        }
+
+        function queryFriendsErr(text) {
+
+        }
+
+        function queryOk(text) {
+            content.appendChild(document.createElement('br'))
+            let userBtn = document.createElement('button')
+            let name = JSON.parse(text)
+            userBtn.innerText = name
+            userBtn.onclick = function() {
+                doReq('post', 'http://127.0.0.1:9999/user/friend/add/'+name, function(text) {
+                    alert('添加成功')
+                }, function(text) {
+                    alert(JSON.parse(text))
+                })
+            }
+            content.appendChild(userBtn)
+        }
+
+        function queryErr(text) {
+            content.appendChild(document.createElement('br'))
+            let user = document.createElement('h3')
+            user.innerText = text
+            content.appendChild(user)
+        }
+
+        function clearContent() {
+            while (content.childNodes.length > 0) {
+                content.removeChild(content.childNodes.item(0))
+            }
+        }
+
+        window.onload = function() {
+            content = document.getElementById('content')
+            let friend = document.getElementById('friend')
+            let group = document.getElementById('group')
+            let add = document.getElementById('add')
+            friend.onclick = friendFunc
+            group.onclick = groupFunc
+            add.onclick = addFunc
+            // 获取好友列表
+            friendFunc()
+            // 获取群聊列表
+            groupFunc()
+            // 获取新朋友列表
+            addFunc()
+            websocket()
+        }
+    </script>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.5_7n1QCN-f34WeU93mEKAwAAAA?w=218&h=219&c=7&r=0&o=5&dpr=2&pid=1.7">
+        </li>
+        <li>
+            <p id="friend">好友</p>
+        </li>
+        <li>
+            <p id="group">群聊</p>
+        </li>
+        <li>
+            <p id="add">添加</p>
+        </li>
+        <li>
+            <p id="disk">
+                网盘
+            </p>
+        </li>
+        <li>
+            <p id="chat">
+                论坛
+            </p>
+        </li>
+    </ul>
+
+    <div id="content">
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="">
+    <img src="">
+    <input type="file" onchange="uploadAndCompress(this.files)">
+    <input type="file" onchange="upload(this.files)" multiple/>
+</body>
+<script>
+    function upload(f) {
+        for (var i = 0; i < f.length; i++) {
+            var reader = new FileReader();
+            reader.readAsDataURL(f[i]);
+            reader.onload = function (e) {
+                const base64Img = e.target.result
+                console.log("compress")
+                console.log(base64Img)
+            }
+        }
+
+    }
+    function uploadAndCompress(f) {
+        options = {
+            size: 1,
+            scale: 0.8
+        }
+        console.log(options.size)
+        compressImg(f[0], options, function (text) {
+            console.log(text)
+        })
+    }
+    var compressImg = function(file,options,callback){
+        var self = this;
+        var imgname = file.name;
+        var imgtype = (imgname.substring(imgname.lastIndexOf('.') + 1)).toLowerCase();
+        if(imgtype == 'jpg' || imgtype == 'jpeg'){
+            imgtype = 'image/jpeg';
+        }else{
+            imgtype = 'image/png';
+        }
+        // 用FileReader读取文件
+        var reader = new FileReader();
+        // 将图片读取为base64
+        reader.readAsDataURL(file);
+        reader.onload = function(evt){
+            var base64 = evt.target.result;
+            // 创建图片对象
+            var img = new Image();
+            // 用图片对象加载读入的base64
+            img.src = base64;
+            img.onload = function () {
+                var that = this,
+                    canvas = document.createElement('canvas'),
+                    ctx = canvas.getContext('2d');
+                canvas.setAttribute('width', that.width);
+                canvas.setAttribute('height', that.height);
+                // 将图片画入canvas
+                ctx.drawImage(that, 0, 0, that.width, that.height);
+                
+                // 压缩到指定体积以下（kb）
+                if(options.size){
+                    var scale = 0.9;
+                    (function f(scale){
+                        if(base64.length / 1024 > options.size && scale > 0){
+                            base64 = canvas.toDataURL(imgtype, scale);
+                            scale = scale - 0.1;
+                            f(scale);
+                        }else{
+                            callback(base64);
+                            
+                        }
+                    })(scale); 
+                } else if(options.scale){
+                    // 按比率压缩
+                    base64 = canvas.toDataURL(imgtype, options.scale);
+                    callback(base64);
+                }
+                
+            }
+        }
+    }
+    /**
+     * 压缩图片到指定大小
+     * @param baseImg base64图片
+     * @param maxSize 单位kb
+     */
+    function compressImgBySize (baseImg, maxSize = 200) {
+    return new Promise((resolve) => {
+        // 计算图片大小
+        const strLength = baseImg.length
+        const fileLength = parseInt(strLength - (strLength / 8) * 2)
+        let size = parseInt((fileLength / 1024).toFixed(2))
+
+        // 判断图片是否符合指定大小要求
+        if (size <= maxSize) {
+        resolve(baseImg)
+        return
+        }
+
+        // 创建image对象
+        const img = new Image()
+        if (baseImg.indexOf('data:image/') !== -1) {
+        img.src = baseImg
+        } else {
+        img.src = 'data:image/jpeg;base64,' + baseImg
+        }
+        
+        img.onload = () => {
+        // 把image对象 转换为 canvas对象
+        const canvas = imgToCanvas(img)
+        let resUrl = ''
+        // 图片质量，范围：0 ~ 1
+        let quality = 0.9
+        
+        // 当图片大小大于指定maxSize，图片质量大于0时继续通过降低图片资料来压缩
+        while (size > maxSize && quality > 0) {
+            // 在canvas上绘制该HTMLImageElement，得到图片base64
+            resUrl = canvas.toDataURL('image/jpeg', quality).replace(/^data:image\/\w+;base64,/, '')
+            const resLength = resUrl.length
+            // 计算绘制出的base64图片大小
+            const resFileLength = parseInt(resLength - (resLength / 8) * 2)
+            size = parseInt((resFileLength / 1024).toFixed(2))
+            // 降低图片质量
+            quality = (quality - 0.1).toFixed(1)
+        }
+        resolve(resUrl)
+        }
+        img.onerror = () => {
+        resolve(baseImg)
+        }
+    })
+    }
+
+    // 把image 转换为 canvas对象
+    function imgToCanvas (image) {
+    var canvas = document.createElement('canvas')
+    canvas.width = image.width
+    canvas.height = image.height
+    canvas.getContext('2d').drawImage(image, 0, 0)
+    return canvas
+    }
+
+</script>
+
+</html>

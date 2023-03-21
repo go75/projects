@@ -1,0 +1,260 @@
+basePath: /
+info:
+  contact: {}
+  description: API文档
+  title: im系统接口文档
+  version: "1.0"
+paths:
+  /friend/add:
+    post:
+      parameters:
+      - description: 对方id
+        in: formData
+        name: id
+        type: string
+      - description: 请求消息内容
+        in: formData
+        name: content
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 添加好友
+      tags:
+      - 好友模块
+  /friend/add/agree:
+    post:
+      parameters:
+      - description: 对方id
+        in: formData
+        name: id
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 同意新好友的请求
+      tags:
+      - 好友模块
+  /friend/add/refuse:
+    post:
+      parameters:
+      - description: 对方id
+        in: formData
+        name: id
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 同意新好友的请求
+      tags:
+      - 好友模块
+  /friend/delete:
+    post:
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 删除好友
+      tags:
+      - 好友模块
+  /friend/list:
+    get:
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 获取所有好友
+      tags:
+      - 好友模块
+  /friend/new:
+    get:
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 新好友信息
+      tags:
+      - 好友模块
+  /group/list:
+    get:
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 群聊列表
+      tags:
+      - 群聊模块
+  /group/new:
+    get:
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 新群友信息
+      tags:
+      - 群聊模块
+  /group/regist:
+    post:
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 创建群聊
+      tags:
+      - 群聊模块
+  /group/session:
+    get:
+      parameters:
+      - description: 群聊id
+        in: formData
+        name: groupid
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 群聊会话
+      tags:
+      - 群聊模块
+  /user/delete:
+    delete:
+      parameters:
+      - description: 密码
+        in: formData
+        name: pwd
+        type: string
+      - description: 检查密码
+        in: formData
+        name: check
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 用户注销
+      tags:
+      - 用户模块
+  /user/list:
+    get:
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 用户列表
+      tags:
+      - 用户模块
+  /user/login:
+    post:
+      parameters:
+      - description: 名称
+        in: formData
+        name: name
+        type: string
+      - description: 密码
+        in: formData
+        name: pwd
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 用户登录
+      tags:
+      - 用户模块
+  /user/query:
+    get:
+      parameters:
+      - description: 名称
+        in: query
+        name: name
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 根据用户名获取用户信息
+      tags:
+      - 用户模块
+  /user/regist:
+    post:
+      parameters:
+      - description: 名称
+        in: formData
+        name: name
+        type: string
+      - description: 密码
+        in: formData
+        name: pwd
+        type: string
+      - description: 检查密码
+        in: formData
+        name: check
+        type: string
+      - description: 选择头像
+        in: formData
+        name: head
+        type: file
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 用户注册
+      tags:
+      - 用户模块
+  /user/session:
+    get:
+      parameters:
+      - description: 会话id
+        in: formData
+        name: id
+        type: string
+      - description: 对方名称
+        in: formData
+        name: name
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 用户会话
+      tags:
+      - 用户模块
+  /user/update:
+    post:
+      parameters:
+      - description: 性别
+        in: formData
+        name: sex
+        type: string
+      - description: 个人介绍
+        in: formData
+        name: introduce
+        type: string
+      responses:
+        "200":
+          description: code", "msg", "data"}
+          schema:
+            type: string
+      summary: 用户信息更新
+      tags:
+      - 用户模块
+swagger: "2.0"

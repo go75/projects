@@ -1,0 +1,69 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    color: black;
+    /* border-bottom: 3px solid cornflowerblue; */
+}
+
+body {
+    background-color: #eee;
+}
+
+#nav{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+#nav h2{
+    color: cornflowerblue;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#nav img{
+    height: 20px;
+}
+
+#nav li {
+    margin-left: 25px;
+    /* border-bottom: 3px solid cornflowerblue; */
+}
+
+#nav input{
+    width: 360px;
+    height: 36px;
+    margin-left: 10px;
+    margin-right: 10px;
+    filter: brightness(90%);
+    border-radius: 15px;
+    outline: none;
+    border: 1px solid cornflowerblue;
+}
+
+#nav svg {
+    position: absolute;
+    border-radius: 15px;
+    left: 1117px;
+    cursor: pointer;
+    z-index: 1;
+    height: 36px;
+}
+
+#nav img {
+    height: 50px;
+}
+
+#content {
+    filter: brightness(80%);
+}

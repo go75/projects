@@ -1,0 +1,44 @@
+body {
+    height: 100%;
+    background-image: linear-gradient(to right, deepskyblue, violet);
+    text-align: center;
+}
+
+h1 {
+  color: grey;
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+
+input {
+  border: 0;
+  width: 50%;
+  height: 10%;
+  font-size: 20px;
+  font-weight: bold;
+  color: grey;
+  background: transparent;
+  border-bottom: 2px solid white;
+  padding: 5px 10px;
+  outline: none;
+  margin-bottom: 5%;
+}
+
+button {
+  margin-bottom: 5%;
+  width: 25%;
+  height: 50px;
+  border-radius: 10px;
+  border: 0;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  background-image: linear-gradient(to right, #30cfd0, #330867);
+}
+
+a {
+  color: white;
+  cursor: pointer;
+  padding-bottom: 0%;
+}

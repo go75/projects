@@ -1,0 +1,85 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <style>
+    body {
+      display: flex;
+      height: 100vh;
+      margin: 0;
+      align-items: center;
+      justify-content: center;
+      padding: 0 50px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    video {
+      max-width: calc(50% - 100px);
+      margin: 0 50px;
+      box-sizing: border-box;
+      border-radius: 2px;
+      padding: 0;
+      box-shadow: rgba(156, 172, 172, 0.2) 0px 2px 2px, rgba(156, 172, 172, 0.2) 0px 4px 4px, rgba(156, 172, 172, 0.2) 0px 8px 8px, rgba(156, 172, 172, 0.2) 0px 16px 16px, rgba(156, 172, 172, 0.2) 0px 32px 32px, rgba(156, 172, 172, 0.2) 0px 64px 64px;
+    }
+    .copy {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="copy">Send your URL to a friend to start a video call</div>
+  <video id="localVideo" autoplay muted></video>
+  <video id="remoteVideo" autoplay></video>
+  <script>
+    peerConnection.current = new RTCPeerConnection(pcOption);
+      const pc = peerConnection.current;
+      // 监听 candidate 获取事件
+      pc.addIceCandidate = candidate=>{
+        if (candidate) {
+          console.log('------ 获取到了本地 candidate：', candidate);
+          // 发送candidate到远端
+          signalServer.current.send({ type: 'candidate', value: candidate });
+        }
+      }
+
+      pc.addTrack = function(track) {
+        
+      }
+
+      // 监听到远端传过来的媒体数据
+      pc.addEventListener('track', e => {
+        console.log('------ 获取到了远端媒体数据：', e);
+        if (remoteVideo.current.srcObject !== e.streams[0]) {
+          remoteVideo.current.srcObject = e.streams[0];
+        }
+      });
+
+    //获取本地媒体数据
+    const getLocalMediaStream = () => {
+      navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then(mediaStream => {
+        console.log('------ 成功获取本地设备媒体数据:', mediaStream);
+        if (mediaStream) {
+          localVideo.current.srcObject = mediaStream;
+          localMediaStream.current = mediaStream;
+
+          // 绑定本地媒体数据到pc对象上
+          if (localMediaStream.current) {
+            console.log('------ 绑定本地媒体数据到pc对象上');
+            localMediaStream.current.getTracks().forEach(track => {
+              peerConnection.current.addTrack(track, localMediaStream.current);
+            });
+          }
+        }
+      });
+    };
+
+  </script>
+</body>
+</html>

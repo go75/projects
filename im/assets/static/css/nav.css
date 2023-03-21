@@ -1,0 +1,35 @@
+li {
+    list-style-type: none;
+}
+
+body {
+    margin: 0;
+    background-image: linear-gradient(to right, deepskyblue, violet);
+}
+  
+ul {
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    background-image: linear-gradient(to bottom, yellowgreen, aqua, deepskyblue, violet);
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+  
+li a {
+    display: block;
+    color: black;
+    padding: 66px 8px;
+    text-decoration: none;
+}
+  
+li a:hover {
+    background-color: skyblue;
+}
+
+img {
+    width: 50px;
+}
