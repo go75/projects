@@ -3,7 +3,7 @@ package config
 func init() {
 	err := inject(map[string]any {
 		"database": DataBase,
-		"redis": Redis,
+		// "redis": Redis,
 		"jwt": Jwt,
 		"log": Log,
 		"dispatcher": Dispatcher,

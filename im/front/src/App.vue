@@ -315,13 +315,17 @@
         tracks[i].stop()
     }
   }
+  function createPeerConnection() {
+    let pc = new RTCPeerConnection()
+    
+  }
 </script>
 
 <template>
   <div class="home">
     <div class="main">
       <div class="nav">
-        <img class="head-icon" :src="'http://127.0.0.1:9999/head/'+myname+'.png'">
+        <img class="head-icon" :src="'http://127.0.0.1:9999/head/' + myname + '.png'">
         <img class="head-icon" :src="img.url" @click="img.fn()" v-for="img in nav">
       </div>
       <div class="content">

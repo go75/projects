@@ -6,7 +6,6 @@ import (
 	"im/log"
 	"im/model"
 	"im/utils"
-	"im/ws/channel"
 	"im/ws/entity"
 	"im/ws/manager"
 )
@@ -22,8 +21,6 @@ func GetGroupSession(r *entity.Request) {
 		log.Warn.Println("发送websocket消息失败: ", err)
 		return
 	}
-
-	global.Rd.Subscribe()
 }
 
 // 获取新群聊信息
@@ -87,10 +84,16 @@ func AddGroup(r *entity.Request) {
 		GroupId: r.ProcessId,
 	}
 	dao.CreateAddGroupMessage(msg)
-	ch := utils.Channel(channel.AddGroup, r.ProcessId)
-	err := utils.Publish(ch, r.ID, entity.Text, r.ProcessId, msg)
+	group := &model.Group{
+		ID: r.ProcessId,
+	}
+	dao.QueryGroupByGroupId(group)
+	if group.Name == "" {
+		return
+	}
+	err := utils.Send(group.MasterId, r.ID, r.Type, r.ProcessId, r.SenderName)
 	if err != nil {
-		log.Warn.Println("消息发布失败: ", err)
+		log.Warn.Println("发送websocket消息失败: ", err)
 		return
 	}
 }

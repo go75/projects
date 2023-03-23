@@ -3,7 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"errors"
-	"im/global"
+	// "im/global"
 	"im/ws/entity"
 	"im/ws/manager"
 
@@ -36,21 +36,21 @@ func Send(connID, id, option, processId uint, payload any) error {
 	return nil
 }
 
-func Publish(channel string, id, option, processId uint, payload any) error {
-	data, err := json.Marshal(payload)
-	if err != nil {
-		return err
-	}
-	obj := entity.Obj{
-		ID: id,
-		Type: option,
-		ProcessId: processId,
-		Payload: string(data),
-	}
-	data, err = json.Marshal(obj)
-	if err != nil {
-		return err
-	}
-	global.Rd.Publish(channel, string(data))
-	return nil
-}
+// func Publish(channel string, id, option, processId uint, payload any) error {
+// 	data, err := json.Marshal(payload)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	obj := entity.Obj{
+// 		ID: id,
+// 		Type: option,
+// 		ProcessId: processId,
+// 		Payload: string(data),
+// 	}
+// 	data, err = json.Marshal(obj)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	global.Rd.Publish(channel, string(data))
+// 	return nil
+// }
