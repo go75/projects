@@ -17,6 +17,6 @@ func GetAddGroupMessagesByGroupId(id uint) ([]*model.AddGroupMessage, *gorm.DB) 
 	return list, db
 }
 
-func DeleteGroupMessage(msg *model.AddGroupMessage) *gorm.DB {
+func DeleteAddGroupMessage(msg *model.AddGroupMessage) *gorm.DB {
 	return global.DB.Where("sender_id = ? and group_id = ?", msg.SenderId, msg.GroupId).Delete(msg)
 }

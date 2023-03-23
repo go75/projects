@@ -96,7 +96,7 @@ func GetFuzzyUserByUserName(r *entity.Request) {
 	}
 }
 
-// 同意新好友请求	
+// 同意新好友请求
 func AgreeNewFriend(r *entity.Request) {
 	var session *model.UserSession
 	if r.ProcessId < r.SenderId {
@@ -150,4 +150,4 @@ func AgreeNewFriend(r *entity.Request) {
 // 拒绝新好友请求
 func RefuseNewFriend(r *entity.Request) {
 	dao.DeleteAddUserMessage(r.ProcessId, r.SenderId)
-} 
+}
