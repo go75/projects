@@ -168,10 +168,12 @@ func RefuseNewGroup(r *entity.Request) {
 
 // 获取群聊聊天记录
 func GetGroupMsgs(r *entity.Request) {
+	// 获取聊天记录
 	ls, _ := dao.QueryGroupMessage(r.ProcessId)
 	if len(ls) == 0 {
 		return
 	}
+	// 响应聊天记录
 	err := utils.Send(r.SenderId, r.ID, entity.Text, r.ProcessId, ls)
 	if err != nil {
 		log.Warn.Println("发送websocket消息失败: ", err)
